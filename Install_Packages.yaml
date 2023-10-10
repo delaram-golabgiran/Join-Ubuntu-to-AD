@@ -1,0 +1,24 @@
+---
+ - name: Playbook to install dependencies
+   hosts: all   #Run on all Hosts
+   become: true  #Run commands with higher priviledge
+   remote_user: itservices #This is my user
+
+   tasks:
+    - name: Ansible apt install dependencies
+      apt:
+        name:
+          - sssd
+          - sssd-tools
+          - realmd
+          - libnss-sss
+          - libpam-sss
+          - adcli
+          - samba-common-bin
+          - oddjob
+          - oddjob-mkhomedir
+          - packagekit
+
+        state: present
+      notify:
+        - restart realmd

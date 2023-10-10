@@ -1,0 +1,19 @@
+---
+- name: change Hostname
+  hosts: all
+  become: yes
+  remote_user: itservices  #My username has higher priviledge
+  become_method: sudo
+  serial: 1  #Means run this command one by one on my Hosts
+
+  vars_prompt:
+  - name: HOSTNAME
+    prompt: Choose a Hostname
+    private: False
+
+  tasks:
+  - name: set_hostname
+    ansible.builtin.hostname:
+      name: '{{ HOSTNAME }}'  #Get User inpute
+#       msg: 'Hostname set {{ HOSTNAME }}'
+
